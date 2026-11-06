@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading: News Reports - ใบความรู้และแบบฝึกหัด</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Noto Sans Thai -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Thai', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0ea5e9', // sky-500
+                        primaryDark: '#0284c7', // sky-600
+                        secondary: '#f43f5e', // rose-500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f0f9ff; /* sky-50 */
+        }
+        .tab-active {
+            border-bottom: 4px solid #0ea5e9;
+            color: #0ea5e9;
+            font-weight: 700;
+        }
+        .tab-inactive {
+            border-bottom: 4px solid transparent;
+            color: #64748b;
+        }
+        .tab-inactive:hover {
+            color: #0ea5e9;
+            background-color: #e0f2fe;
+        }
+        /* Custom Audio Button Animation */
+        .speak-btn:active {
+            transform: scale(0.95);
+        }
+        .section-hidden {
+            display: none;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased h-screen flex flex-col">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="bg-slate-800 text-white py-4 px-6 text-center">
+            <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Unit 1: An Emergency?</h1>
+            <p class="text-sky-300 font-medium">Lesson 2: Reading: News Reports</p>
+        </div>
+        
+        <!-- Tabs -->
+        <nav class="flex justify-center border-b border-slate-200 overflow-x-auto">
+            <button onclick="switchTab('knowledge')" id="tab-knowledge" class="px-6 py-4 text-lg transition-colors tab-active whitespace-nowrap">
+                <i class="fa-solid fa-book-open mr-2"></i>หน้าความรู้
+            </button>
+            <button onclick="switchTab('exercise')" id="tab-exercise" class="px-6 py-4 text-lg transition-colors tab-inactive whitespace-nowrap">
+                <i class="fa-solid fa-pen-to-square mr-2"></i>แบบฝึกหัด
+            </button>
+            <button onclick="switchTab('quiz')" id="tab-quiz" class="px-6 py-4 text-lg transition-colors tab-inactive whitespace-nowrap">
+                <i class="fa-solid fa-clipboard-check mr-2"></i>แบบทดสอบหลังเรียน
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow overflow-y-auto p-4 md:p-8">
+        
+        <!-- ============================================== -->
+        <!-- 1. KNOWLEDGE SECTION (หน้าความรู้)             -->
+        <!-- ============================================== -->
+        <section id="sec-knowledge" class="max-w-4xl mx-auto fade-in">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8">
+                <div class="bg-sky-500 text-white p-6">
+                    <h2 class="text-3xl font-bold mb-2">How to Read a News Report (5W1H)</h2>
+                    <p class="text-sky-100 text-lg">เทคนิคการอ่านข่าวภาษาอังกฤษให้จับใจความได้รวดเร็ว</p>
+                </div>
+                
+                <div class="p-6 md:p-8">
+                    <p class="text-lg text-slate-700 mb-6 leading-relaxed">
+                        เมื่อนักเรียนอ่านข่าวภาษาอังกฤษ ไม่จำเป็นต้องแปลทุกคำ! เคล็ดลับคือการมองหาข้อมูล <strong>5W1H</strong> ซึ่งเป็นโครงสร้างหลักของการเขียนข่าวทุกประเภท
+                    </p>
+
+                    <div class="space-y-6">
+                        <!-- WHO -->
+                        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 flex flex-col md:flex-row gap-4 items-start">
+                            <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                                Who
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-xl font-bold text-slate-800 mb-1">ใครอยู่ในเหตุการณ์?</h3>
+                                <p class="text-slate-600 mb-3">(Look for people, names, victims, rescue teams)</p>
+                                <div class="bg-white border border-slate-200 p-3 rounded-lg flex justify-between items-center">
+                                    <span class="text-lg font-medium text-slate-700">"The firefighters rescued a young boy."</span>
+                                    <button onclick="speak('The firefighters rescued a young boy.')" class="speak-btn bg-sky-100 text-sky-600 hover:bg-sky-200 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                        <i class="fa-solid fa-volume-high"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- WHAT -->
+                        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 flex flex-col md:flex-row gap-4 items-start">
+                            <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                                What
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-xl font-bold text-slate-800 mb-1">เกิดอะไรขึ้น / เหตุการณ์หลักคืออะไร?</h3>
+                                <p class="text-slate-600 mb-3">(Look for action verbs, event types like accident, fire)</p>
+                                <div class="bg-white border border-slate-200 p-3 rounded-lg flex justify-between items-center">
+                                    <span class="text-lg font-medium text-slate-700">"A massive fire destroyed the local factory."</span>
+                                    <button onclick="speak('A massive fire destroyed the local factory.')" class="speak-btn bg-sky-100 text-sky-600 hover:bg-sky-200 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                        <i class="fa-solid fa-volume-high"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- WHERE -->
+                        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 flex flex-col md:flex-row gap-4 items-start">
+                            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                                Where
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-xl font-bold text-slate-800 mb-1">เกิดขึ้นที่ไหน?</h3>
+                                <p class="text-slate-600 mb-3">(Look for places, streets, cities, countries)</p>
+                                <div class="bg-white border border-slate-200 p-3 rounded-lg flex justify-between items-center">
+                                    <span class="text-lg font-medium text-slate-700">"The accident happened on Silom Road."</span>
+                                    <button onclick="speak('The accident happened on Silom Road.')" class="speak-btn bg-sky-100 text-sky-600 hover:bg-sky-200 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                        <i class="fa-solid fa-volume-high"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- WHEN -->
+                        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 flex flex-col md:flex-row gap-4 items-start">
+                            <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                                When
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-xl font-bold text-slate-800 mb-1">เกิดขึ้นเมื่อไร?</h3>
+                                <p class="text-slate-600 mb-3">(Look for time, days, dates, yesterday, this morning)</p>
+                                <div class="bg-white border border-slate-200 p-3 rounded-lg flex justify-between items-center">
+                                    <span class="text-lg font-medium text-slate-700">"The earthquake struck at 10:00 PM yesterday."</span>
+                                    <button onclick="speak('The earthquake struck at 10:00 PM yesterday.')" class="speak-btn bg-sky-100 text-sky-600 hover:bg-sky-200 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                        <i class="fa-solid fa-volume-high"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- WHY -->
+                        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 flex flex-col md:flex-row gap-4 items-start">
+                            <div class="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                                Why
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-xl font-bold text-slate-800 mb-1">ทำไมจึงเกิดเหตุการณ์นี้ (สาเหตุ)?</h3>
+                                <p class="text-slate-600 mb-3">(Look for reasons, 'because', 'due to')</p>
+                                <div class="bg-white border border-slate-200 p-3 rounded-lg flex justify-between items-center">
+                                    <span class="text-lg font-medium text-slate-700">"The car crashed because the road was slippery."</span>
+                                    <button onclick="speak('The car crashed because the road was slippery.')" class="speak-btn bg-sky-100 text-sky-600 hover:bg-sky-200 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                        <i class="fa-solid fa-volume-high"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- HOW -->
+                        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 flex flex-col md:flex-row gap-4 items-start">
+                            <div class="w-16 h-16 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                                How
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-xl font-bold text-slate-800 mb-1">เหตุการณ์เกิดขึ้นได้อย่างไร หรือ จบลงอย่างไร?</h3>
+                                <p class="text-slate-600 mb-3">(Look for the process or the result/injuries)</p>
+                                <div class="bg-white border border-slate-200 p-3 rounded-lg flex justify-between items-center">
+                                    <span class="text-lg font-medium text-slate-700">"The driver was badly injured, but an ambulance arrived quickly."</span>
+                                    <button onclick="speak('The driver was badly injured, but an ambulance arrived quickly.')" class="speak-btn bg-sky-100 text-sky-600 hover:bg-sky-200 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                        <i class="fa-solid fa-volume-high"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button onclick="switchTab('exercise')" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-full shadow-md transition-transform transform hover:scale-105">
+                    ไปทำแบบฝึกหัดกันเลย <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 2. EXERCISE SECTION (หน้าแบบฝึกหัด)             -->
+        <!-- ============================================== -->
+        <section id="sec-exercise" class="max-w-5xl mx-auto section-hidden fade-in">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-secondary text-white p-6 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-1">News Hunter Activity 🕵️‍♂️</h2>
+                        <p class="text-rose-100">ฝึกวิเคราะห์ 5W1H จากข่าวจำลอง</p>
+                    </div>
+                </div>
+                
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <!-- News Article -->
+                    <div class="lg:w-1/2">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4 border-b-2 border-slate-200 pb-2">Breaking News Article</h3>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-r-lg shadow-sm relative">
+                            <button onclick="speak(document.getElementById('news-text').innerText)" class="absolute top-4 right-4 speak-btn bg-yellow-200 text-yellow-700 hover:bg-yellow-300 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                            <h4 class="font-bold text-lg mb-3 text-slate-800">Car Accident on Silom Road</h4>
+                            <p id="news-text" class="text-lg text-slate-700 leading-relaxed">
+                                A car crashed into a big tree on Silom Road at 10:00 PM yesterday because the road was very slippery from the heavy rain. The driver was injured, but an ambulance arrived quickly to help him.
+                            </p>
+                        </div>
+                        <div class="mt-6 p-4 bg-slate-50 rounded-lg text-slate-600 text-sm">
+                            <i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i>
+                            <strong>Hint:</strong> อ่านเนื้อข่าวแล้วนำข้อมูลมาเติมในช่องว่างด้านขวาให้ถูกต้อง!
+                        </div>
+                    </div>
+
+                    <!-- 5W1H Form -->
+                    <div class="lg:w-1/2">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4 border-b-2 border-slate-200 pb-2">Find the 5W1H</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">Who? (ใคร)</label>
+                                <input type="text" id="nh-who" placeholder="พิมพ์คำตอบที่นี่..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-shadow">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">What? (เกิดอะไรขึ้น)</label>
+                                <input type="text" id="nh-what" placeholder="พิมพ์คำตอบที่นี่..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-shadow">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">Where? (ที่ไหน)</label>
+                                <input type="text" id="nh-where" placeholder="พิมพ์คำตอบที่นี่..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-shadow">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">When? (เมื่อไร)</label>
+                                <input type="text" id="nh-when" placeholder="พิมพ์คำตอบที่นี่..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-shadow">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">Why? (ทำไม)</label>
+                                <input type="text" id="nh-why" placeholder="พิมพ์คำตอบที่นี่..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-shadow">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">How? (ผลเป็นอย่างไร)</label>
+                                <input type="text" id="nh-how" placeholder="พิมพ์คำตอบที่นี่..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-shadow">
+                            </div>
+                        </div>
+                        <div class="mt-6 text-right">
+                            <button onclick="checkExercise()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg shadow transition-colors">
+                                ตรวจสอบเบื้องต้น (Check)
+                            </button>
+                        </div>
+                        
+                        <!-- Feedback Message -->
+                        <div id="exercise-feedback" class="hidden mt-4 p-4 rounded-lg bg-emerald-100 text-emerald-800 font-medium">
+                            <!-- JS จะแสดงผลสรุปรายงานที่นี่ -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ใบงานที่ 2 (งานเดี่ยว) -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mt-8 mb-8">
+                <div class="bg-indigo-500 text-white p-6 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-1">ใบงานที่ 2: Reading: Emergency News Report 📝</h2>
+                        <p class="text-indigo-100">งานเดี่ยว - อ่านข่าวสั้นและตอบคำถามด้านล่าง</p>
+                    </div>
+                </div>
+                
+                <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                    <!-- News Article -->
+                    <div class="lg:w-1/2">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4 border-b-2 border-slate-200 pb-2">Breaking News</h3>
+                        <div class="bg-slate-50 border-l-4 border-indigo-500 p-6 rounded-r-lg shadow-sm relative">
+                            <button onclick="speak(document.getElementById('indiv-news-text').innerText)" class="absolute top-4 right-4 speak-btn bg-indigo-100 text-indigo-600 hover:bg-indigo-200 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                            <p id="indiv-news-text" class="text-lg text-slate-700 leading-relaxed mt-2">
+                                Firefighters rescued a 10-year-old boy from a burning house in Bangkok this morning. The fire started in the kitchen because someone forgot to turn off the stove. Luckily, no one was badly injured.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Questions Form -->
+                    <div class="lg:w-1/2">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4 border-b-2 border-slate-200 pb-2">Questions</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">1. What happened in this news?</label>
+                                <input type="text" id="indiv-q1" placeholder="Type your answer here..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-shadow">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">2. Where did the emergency happen?</label>
+                                <input type="text" id="indiv-q2" placeholder="Type your answer here..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-shadow">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">3. Who was rescued by the firefighters?</label>
+                                <input type="text" id="indiv-q3" placeholder="Type your answer here..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-shadow">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">4. Why did the fire start?</label>
+                                <input type="text" id="indiv-q4" placeholder="Type your answer here..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-shadow">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">5. Was anyone badly injured?</label>
+                                <input type="text" id="indiv-q5" placeholder="Type your answer here..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-shadow">
+                            </div>
+                        </div>
+                        <div class="mt-6 text-right">
+                            <button onclick="checkIndividualExercise()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-8 rounded-lg shadow transition-colors">
+                                ส่งคำตอบ (Submit) <i class="fa-solid fa-paper-plane ml-2"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Feedback Message -->
+                        <div id="indiv-feedback" class="hidden mt-4 p-4 rounded-lg bg-indigo-100 text-indigo-800 font-medium text-left">
+                            <!-- JS จะแสดงผลสรุปรายงานที่นี่ -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 3. QUIZ SECTION (หน้าแบบทดสอบหลังเรียน)          -->
+        <!-- ============================================== -->
+        <section id="sec-quiz" class="max-w-3xl mx-auto section-hidden fade-in">
+            
+            <!-- Registration / Start Screen -->
+            <div id="quiz-start" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center">
+                <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-4">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-slate-800 mb-2">แบบทดสอบหลังเรียน</h2>
+                <p class="text-slate-600 mb-8">Reading: Emergency News Report (5 ข้อ)</p>
+                
+                <div class="max-w-md mx-auto text-left">
+                    <label class="block text-sm font-bold text-slate-700 mb-2">กรุณากรอก ชื่อ-นามสกุล ก่อนเริ่มทำแบบทดสอบ</label>
+                    <input type="text" id="student-name" placeholder="ด.ช. / ด.ญ. ..................................." class="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-lg focus:outline-none focus:border-indigo-500 mb-6">
+                    
+                    <button onclick="startQuiz()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-colors text-lg">
+                        เริ่มทำแบบทดสอบ
+                    </button>
+                    <p id="name-error" class="text-red-500 text-sm mt-2 hidden"><i class="fa-solid fa-circle-exclamation mr-1"></i> กรุณากรอกชื่อ-นามสกุล</p>
+                </div>
+            </div>
+
+            <!-- Active Quiz Screen -->
+            <div id="quiz-active" class="hidden">
+                
+                <!-- News Context (Always visible during quiz) -->
+                <div class="bg-slate-800 text-white rounded-t-2xl p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-indigo-300"><i class="fa-solid fa-newspaper mr-2"></i>Read the News Report:</h3>
+                        <button onclick="speak(document.getElementById('quiz-news').innerText)" class="speak-btn bg-slate-700 hover:bg-slate-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                    </div>
+                    <p id="quiz-news" class="text-lg leading-relaxed bg-slate-700 p-4 rounded-lg border-l-4 border-indigo-500">
+                        Firefighters rescued a 10-year-old boy from a burning house in Bangkok this morning. The fire started in the kitchen because someone forgot to turn off the stove. Luckily, no one was badly injured.
+                    </p>
+                </div>
+
+                <!-- Question Area -->
+                <div class="bg-white border-x border-b border-slate-200 rounded-b-2xl p-6 md:p-8 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-sm font-bold text-slate-500 uppercase tracking-wider">Question <span id="q-current">1</span> of 5</span>
+                        <div class="w-1/2 bg-slate-200 rounded-full h-2.5">
+                            <div id="quiz-progress" class="bg-indigo-600 h-2.5 rounded-full" style="width: 20%"></div>
+                        </div>
+                    </div>
+                    
+                    <h3 id="question-text" class="text-2xl font-bold text-slate-800 mb-6">What happened in this news?</h3>
+                    
+                    <div id="options-container" class="space-y-3 mb-8">
+                        <!-- Options injected by JS -->
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <p id="select-error" class="text-red-500 font-medium hidden">กรุณาเลือกคำตอบ 1 ข้อ</p>
+                        <button onclick="nextQuestion()" id="next-btn" class="ml-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-8 rounded-lg transition-colors">
+                            ข้อต่อไป (Next) <i class="fa-solid fa-chevron-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Result Screen -->
+            <div id="quiz-result" class="hidden bg-white rounded-2xl shadow-sm border border-slate-200 p-10 text-center relative overflow-hidden">
+                <!-- Confetti Background Effect -->
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+                
+                <i class="fa-solid fa-award text-6xl text-yellow-400 mb-4"></i>
+                <h2 class="text-3xl font-bold text-slate-800 mb-2">สรุปผลการทำแบบทดสอบ</h2>
+                <p id="result-name" class="text-xl text-indigo-600 font-bold mb-6">ด.ช. สมชาย เรียนดี</p>
+                
+                <div class="w-48 h-48 mx-auto border-8 border-indigo-100 rounded-full flex flex-col items-center justify-center mb-8 relative">
+                    <span class="text-sm text-slate-500 uppercase font-bold tracking-wide">คะแนนของคุณ</span>
+                    <div class="flex items-baseline">
+                        <span id="result-score" class="text-6xl font-black text-indigo-600">4</span>
+                        <span class="text-2xl font-bold text-slate-400">/5</span>
+                    </div>
+                </div>
+
+                <div id="result-message" class="text-lg font-medium text-slate-700 mb-8 bg-slate-50 p-4 rounded-lg">
+                    ยอดเยี่ยม! คุณเข้าใจการวิเคราะห์ข่าวได้ดีมาก
+                </div>
+                
+                <button onclick="resetQuiz()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-8 rounded-lg shadow transition-colors">
+                    <i class="fa-solid fa-rotate-right mr-2"></i> ทำแบบทดสอบอีกครั้ง
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Custom Modal / Alert Box -->
+    <div id="custom-modal" class="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-50 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-xl shadow-xl max-w-sm w-full p-6 text-center mx-4 fade-in">
+            <div id="modal-icon" class="text-4xl mb-4 text-sky-500"><i class="fa-solid fa-circle-info"></i></div>
+            <h3 id="modal-title" class="text-xl font-bold text-slate-800 mb-2">Message</h3>
+            <p id="modal-message" class="text-slate-600 mb-6">Message content here.</p>
+            <button onclick="closeModal()" class="w-full bg-slate-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-slate-700 transition-colors">
+                ตกลง (OK)
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // UI & Navigation Logic
+        // ==========================================
+        function switchTab(tabId) {
+            // Update Tab Styling
+            const tabs = ['knowledge', 'exercise', 'quiz'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === tabId) {
+                    btn.classList.add('tab-active');
+                    btn.classList.remove('tab-inactive');
+                } else {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('tab-inactive');
+                }
+            });
+
+            // Show/Hide Sections
+            document.getElementById('sec-knowledge').classList.add('section-hidden');
+            document.getElementById('sec-exercise').classList.add('section-hidden');
+            document.getElementById('sec-quiz').classList.add('section-hidden');
+            
+            document.getElementById(`sec-${tabId}`).classList.remove('section-hidden');
+            
+            // Re-trigger animation
+            const activeSection = document.getElementById(`sec-${tabId}`);
+            activeSection.classList.remove('fade-in');
+            void activeSection.offsetWidth; // trigger reflow
+            activeSection.classList.add('fade-in');
+        }
+
+        // ==========================================
+        // Text-to-Speech (TTS) Logic
+        // ==========================================
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                // Cancel any ongoing speech
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9; // Slightly slower for clear pronunciation
+                window.speechSynthesis.speak(utterance);
+            } else {
+                showModal("Sorry", "เบราว์เซอร์ของคุณไม่รองรับระบบอ่านออกเสียง", "error");
+            }
+        }
+
+        // ==========================================
+        // Custom Modal Logic (Replacing alert)
+        // ==========================================
+        function showModal(title, message, type="info") {
+            const modal = document.getElementById('custom-modal');
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            
+            const icon = document.getElementById('modal-icon');
+            if(type === "error") {
+                icon.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i>';
+                icon.className = "text-4xl mb-4 text-red-500";
+            } else if (type === "success") {
+                icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+                icon.className = "text-4xl mb-4 text-emerald-500";
+            } else {
+                icon.innerHTML = '<i class="fa-solid fa-circle-info"></i>';
+                icon.className = "text-4xl mb-4 text-sky-500";
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        // ==========================================
+        // Helper func to check keywords
+        // ==========================================
+        function validateInput(inputValue, keywords) {
+            if (!inputValue || !inputValue.trim()) return false;
+            const lowerInput = inputValue.toLowerCase();
+            return keywords.some(keyword => lowerInput.includes(keyword.toLowerCase()));
+        }
+
+        // ==========================================
+        // Check News Hunter Activity
+        // ==========================================
+        function checkExercise() {
+            // เฉลย Keywords สำหรับ News Hunter
+            const answerKeys = [
+                { id: 'nh-who', label: 'Who', keys: ['driver', 'ambulance', 'man'] },
+                { id: 'nh-what', label: 'What', keys: ['crash', 'accident', 'tree'] },
+                { id: 'nh-where', label: 'Where', keys: ['silom', 'road'] },
+                { id: 'nh-when', label: 'When', keys: ['10:00', 'pm', 'yesterday'] },
+                { id: 'nh-why', label: 'Why', keys: ['slippery', 'rain', 'heavy'] },
+                { id: 'nh-how', label: 'How', keys: ['injure', 'arrive', 'help'] }
+            ];
+
+            let score = 0;
+            let reportHTML = '<h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-clipboard-list"></i> สรุปผลการวิเคราะห์ (News Hunter):</h4><ul class="space-y-2">';
+
+            answerKeys.forEach(item => {
+                const inputEl = document.getElementById(item.id);
+                const val = inputEl.value.trim();
+                const isCorrect = validateInput(val, item.keys);
+                
+                inputEl.classList.remove('border-slate-300', 'border-red-500', 'border-emerald-500', 'ring-red-500', 'ring-emerald-500');
+
+                if (isCorrect) {
+                    score++;
+                    reportHTML += `<li><i class="fa-solid fa-check text-emerald-600 mr-2 w-5"></i> <strong>${item.label}:</strong> <span class="text-emerald-700">ถูกต้อง</span> (${val || '-'})</li>`;
+                    inputEl.classList.add('border-emerald-500', 'focus:ring-emerald-500');
+                } else {
+                    const hint = item.keys[0]; // แนะนำคำตอบคร่าวๆ
+                    reportHTML += `<li><i class="fa-solid fa-xmark text-red-600 mr-2 w-5"></i> <strong>${item.label}:</strong> <span class="text-red-600">ต้องปรับปรุง</span> (ยังไม่พบคำที่เกี่ยวข้องกัน เช่น <em>${hint}</em>)</li>`;
+                    inputEl.classList.add('border-red-500', 'focus:ring-red-500');
+                }
+            });
+
+            reportHTML += `</ul><div class="mt-4 pt-3 border-t border-slate-300/30 font-bold text-lg">คะแนนรวม: ${score} / ${answerKeys.length}</div>`;
+
+            const feedbackDiv = document.getElementById('exercise-feedback');
+            feedbackDiv.innerHTML = reportHTML;
+            feedbackDiv.classList.remove('hidden');
+            
+            // เปลี่ยนสีพื้นหลังตามคะแนน
+            if (score === answerKeys.length) {
+                feedbackDiv.className = 'mt-4 p-4 rounded-lg font-medium bg-emerald-100 text-emerald-800';
+            } else if (score >= 3) {
+                feedbackDiv.className = 'mt-4 p-4 rounded-lg font-medium bg-yellow-100 text-yellow-800';
+            } else {
+                feedbackDiv.className = 'mt-4 p-4 rounded-lg font-medium bg-rose-100 text-rose-800';
+            }
+        }
+
+        // ==========================================
+        // Check Individual Exercise (ใบงานที่ 2)
+        // ==========================================
+        function checkIndividualExercise() {
+            // เฉลย Keywords สำหรับใบงานเดี่ยว
+            const answerKeys = [
+                { id: 'indiv-q1', label: 'Q1', keys: ['fire', 'rescue', 'burn'] },
+                { id: 'indiv-q2', label: 'Q2', keys: ['bangkok', 'house', 'kitchen'] },
+                { id: 'indiv-q3', label: 'Q3', keys: ['boy', '10-year-old', 'ten'] },
+                { id: 'indiv-q4', label: 'Q4', keys: ['forgot', 'stove', 'turn off'] },
+                { id: 'indiv-q5', label: 'Q5', keys: ['no', 'luckily', 'no one'] }
+            ];
+
+            let score = 0;
+            let reportHTML = '<h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-file-signature"></i> ผลการตรวจใบงานที่ 2:</h4><ul class="space-y-2">';
+
+            answerKeys.forEach(item => {
+                const inputEl = document.getElementById(item.id);
+                const val = inputEl.value.trim();
+                const isCorrect = validateInput(val, item.keys);
+                
+                inputEl.classList.remove('border-slate-300', 'border-red-500', 'border-indigo-500');
+
+                if (isCorrect) {
+                    score++;
+                    reportHTML += `<li><i class="fa-solid fa-circle-check text-indigo-600 mr-2"></i> <strong>${item.label}:</strong> <span class="text-indigo-700">Good Job!</span> (${val})</li>`;
+                    inputEl.classList.add('border-indigo-500');
+                } else {
+                    reportHTML += `<li><i class="fa-solid fa-circle-xmark text-red-500 mr-2"></i> <strong>${item.label}:</strong> <span class="text-red-600">Try again!</span> (คำตอบของคุณ: ${val || 'ไม่ได้ตอบ'})</li>`;
+                    inputEl.classList.add('border-red-500');
+                }
+            });
+
+            reportHTML += `</ul><div class="mt-4 pt-3 border-t border-slate-300/30 font-bold text-lg text-center">Score: ${score} / ${answerKeys.length}</div>`;
+
+            const feedbackDiv = document.getElementById('indiv-feedback');
+            feedbackDiv.innerHTML = reportHTML;
+            feedbackDiv.classList.remove('hidden');
+        }
+
+        // ==========================================
+        // Quiz Logic
+        // ==========================================
+        const quizData = [
+            {
+                question: "1. What happened in this news?",
+                options: ["A car accident on the road", "A house was burning", "An earthquake in Bangkok", "A flood in the kitchen"],
+                answer: 1
+            },
+            {
+                question: "2. Where did the emergency happen?",
+                options: ["In a factory", "On Silom Road", "In a house in Bangkok", "At the hospital"],
+                answer: 2
+            },
+            {
+                question: "3. Who was rescued?",
+                options: ["A firefighter", "An old man", "A 10-year-old boy", "No one"],
+                answer: 2
+            },
+            {
+                question: "4. Why did the fire start?",
+                options: ["Because of the heavy rain", "Someone forgot to turn off the stove", "A car crashed into the house", "The boy was playing with fire"],
+                answer: 1
+            },
+            {
+                question: "5. Was anyone badly injured?",
+                options: ["Yes, the boy was injured", "Yes, the firefighter was injured", "No one knows", "No, luckily no one was badly injured"],
+                answer: 3
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let studentName = "";
+        let selectedOption = null;
+
+        function startQuiz() {
+            const nameInput = document.getElementById('student-name');
+            const errorMsg = document.getElementById('name-error');
+            
+            if (nameInput.value.trim() === "") {
+                errorMsg.classList.remove('hidden');
+                nameInput.classList.add('border-red-500');
+                return;
+            }
+            
+            studentName = nameInput.value.trim();
+            errorMsg.classList.add('hidden');
+            nameInput.classList.remove('border-red-500');
+            
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-active').classList.remove('hidden');
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const qData = quizData[currentQuestionIndex];
+            document.getElementById('question-text').innerText = qData.question;
+            document.getElementById('q-current').innerText = currentQuestionIndex + 1;
+            
+            // Update progress bar
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            document.getElementById('quiz-progress').style.width = `${progress}%`;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            selectedOption = null;
+            document.getElementById('select-error').classList.add('hidden');
+
+            // Render options
+            qData.options.forEach((opt, index) => {
+                const optDiv = document.createElement('div');
+                optDiv.className = "quiz-option border-2 border-slate-200 rounded-xl p-4 cursor-pointer hover:bg-indigo-50 transition-colors flex items-center gap-3";
+                optDiv.onclick = () => selectOption(index, optDiv);
+                
+                const radioCircle = document.createElement('div');
+                radioCircle.className = "w-5 h-5 rounded-full border-2 border-slate-300 flex-shrink-0 flex items-center justify-center radio-indicator";
+                
+                const label = document.createElement('span');
+                label.className = "text-lg text-slate-700 font-medium";
+                label.innerText = opt;
+
+                optDiv.appendChild(radioCircle);
+                optDiv.appendChild(label);
+                optionsContainer.appendChild(optDiv);
+            });
+            
+            // Change Next button text on last question
+            const nextBtn = document.getElementById('next-btn');
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextBtn.innerHTML = 'ส่งคำตอบ (Submit) <i class="fa-solid fa-paper-plane ml-2"></i>';
+                nextBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+                nextBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+            } else {
+                nextBtn.innerHTML = 'ข้อต่อไป (Next) <i class="fa-solid fa-chevron-right ml-2"></i>';
+                nextBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                nextBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+            }
+        }
+
+        function selectOption(index, element) {
+            selectedOption = index;
+            document.getElementById('select-error').classList.add('hidden');
+            
+            // Reset all options UI
+            const allOptions = document.querySelectorAll('.quiz-option');
+            allOptions.forEach(opt => {
+                opt.classList.remove('border-indigo-500', 'bg-indigo-50');
+                opt.classList.add('border-slate-200');
+                opt.querySelector('.radio-indicator').innerHTML = '';
+                opt.querySelector('.radio-indicator').classList.remove('border-indigo-500');
+            });
+
+            // Set selected option UI
+            element.classList.remove('border-slate-200');
+            element.classList.add('border-indigo-500', 'bg-indigo-50');
+            element.querySelector('.radio-indicator').classList.add('border-indigo-500');
+            element.querySelector('.radio-indicator').innerHTML = '<div class="w-2.5 h-2.5 bg-indigo-500 rounded-full"></div>';
+        }
+
+        function nextQuestion() {
+            if (selectedOption === null) {
+                document.getElementById('select-error').classList.remove('hidden');
+                return;
+            }
+
+            // Check answer
+            if (selectedOption === quizData[currentQuestionIndex].answer) {
+                score++;
+            }
+
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-active').classList.add('hidden');
+            const resultScreen = document.getElementById('quiz-result');
+            
+            document.getElementById('result-name').innerText = studentName;
+            document.getElementById('result-score').innerText = score;
+            
+            const msgElement = document.getElementById('result-message');
+            if(score === 5) {
+                msgElement.innerText = "ยอดเยี่ยมมาก! (Excellent) คุณวิเคราะห์ข่าวได้อย่างสมบูรณ์แบบ";
+                msgElement.className = "text-lg font-medium text-emerald-700 mb-8 bg-emerald-50 p-4 rounded-lg";
+            } else if (score >= 3) {
+                msgElement.innerText = "ทำได้ดี! (Good job) คุณเข้าใจโครงสร้างข่าวได้ดี";
+                msgElement.className = "text-lg font-medium text-blue-700 mb-8 bg-blue-50 p-4 rounded-lg";
+            } else {
+                msgElement.innerText = "พยายามอีกนิดนะ! (Keep trying) กลับไปทบทวนหน้าความรู้อีกครั้งได้เลย";
+                msgElement.className = "text-lg font-medium text-orange-700 mb-8 bg-orange-50 p-4 rounded-lg";
+            }
+
+            resultScreen.classList.remove('hidden');
+            
+            // Trigger reflow for fade in
+            resultScreen.classList.remove('fade-in');
+            void resultScreen.offsetWidth;
+            resultScreen.classList.add('fade-in');
+        }
+
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-start').classList.remove('hidden');
+            document.getElementById('student-name').value = '';
+        }
+
+    </script>
+</body>
+</html>
