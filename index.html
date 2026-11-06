@@ -394,7 +394,7 @@
                         </button>
                     </div>
                     <p id="quiz-news" class="text-lg leading-relaxed bg-slate-700 p-4 rounded-lg border-l-4 border-indigo-500">
-                        Firefighters rescued a 10-year-old boy from a burning house in Bangkok this morning. The fire started in the kitchen because someone forgot to turn off the stove. Luckily, no one was badly injured.
+                        A strong earthquake hit a small town in Japan at 2:00 PM yesterday. Many old buildings fell down. Rescue teams and police dogs worked all night to find people. They successfully pulled a 60-year-old woman out of the rubble this morning. She was tired but not badly injured. She was taken to the hospital by an ambulance.
                     </p>
                 </div>
 
@@ -451,6 +451,14 @@
         </section>
 
     </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-300 py-6 text-center text-sm mt-auto">
+        <div class="max-w-4xl mx-auto px-4">
+            <p class="mb-1"><i class="fa-solid fa-code text-sky-400 mr-2"></i>สร้างและพัฒนาโดย <span class="font-bold text-white">นายนรินทร์ อนงค์ชัย</span></p>
+            <p>ครู โรงเรียนเทพอุดมวิทยา สพม.สุรินทร์</p>
+        </div>
+    </footer>
 
     <!-- Custom Modal / Alert Box -->
     <div id="custom-modal" class="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-50 hidden backdrop-blur-sm">
@@ -695,29 +703,29 @@
         // ==========================================
         const baseQuizData = [
             {
-                question: "What happened in this news?",
-                options: ["A car accident on the road", "A house was burning", "An earthquake in Bangkok", "A flood in the kitchen"],
-                answer: 1
+                question: "What is the main event in this news?",
+                options: ["A strong earthquake", "A car accident", "A house fire", "A bank robbery"],
+                answer: 0
             },
             {
                 question: "Where did the emergency happen?",
-                options: ["In a factory", "On Silom Road", "In a house in Bangkok", "At the hospital"],
-                answer: 2
-            },
-            {
-                question: "Who was rescued?",
-                options: ["A firefighter", "An old man", "A 10-year-old boy", "No one"],
-                answer: 2
-            },
-            {
-                question: "Why did the fire start?",
-                options: ["Because of the heavy rain", "Someone forgot to turn off the stove", "A car crashed into the house", "The boy was playing with fire"],
+                options: ["In a big city in Thailand", "In a small town in Japan", "At the police station", "In a hospital"],
                 answer: 1
             },
             {
-                question: "Was anyone badly injured?",
-                options: ["Yes, the boy was injured", "Yes, the firefighter was injured", "No one knows", "No, luckily no one was badly injured"],
-                answer: 3
+                question: "Who helped to find people in the rubble?",
+                options: ["Firefighters and cats", "Only the police", "Rescue teams and police dogs", "Doctors and nurses"],
+                answer: 2
+            },
+            {
+                question: "When did the earthquake hit the town?",
+                options: ["This morning", "At 2:00 PM yesterday", "Last week", "At night"],
+                answer: 1
+            },
+            {
+                question: "How was the 60-year-old woman after they found her?",
+                options: ["She was badly injured.", "She was tired but not badly injured.", "She ran away.", "She was angry."],
+                answer: 1
             }
         ];
 
