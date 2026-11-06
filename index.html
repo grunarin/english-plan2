@@ -219,6 +219,14 @@
         <!-- 2. EXERCISE SECTION (หน้าแบบฝึกหัด)             -->
         <!-- ============================================== -->
         <section id="sec-exercise" class="max-w-5xl mx-auto section-hidden fade-in">
+            
+            <!-- Enter Name for Exercises -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6 text-center max-w-md mx-auto">
+                <label class="block text-sm font-bold text-slate-700 mb-2">กรุณากรอก ชื่อ-นามสกุล ก่อนทำแบบฝึกหัด</label>
+                <input type="text" id="exercise-name" placeholder="ด.ช. / ด.ญ. ..................................." class="w-full border-2 border-slate-300 rounded-lg px-4 py-2 text-lg focus:outline-none focus:border-sky-500 mb-2 transition-colors">
+                <p id="ex-name-error" class="text-red-500 text-sm hidden"><i class="fa-solid fa-circle-exclamation mr-1"></i> กรุณากรอกชื่อ-นามสกุลก่อนส่งคำตอบ</p>
+            </div>
+
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="bg-secondary text-white p-6 flex items-center justify-between">
                     <div>
@@ -249,7 +257,7 @@
                     <!-- 5W1H Form -->
                     <div class="lg:w-1/2">
                         <h3 class="text-xl font-bold text-slate-800 mb-4 border-b-2 border-slate-200 pb-2">Find the 5W1H</h3>
-                        <div class="space-y-4">
+                        <div id="nh-questions-container" class="space-y-4">
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-1">Who? (ใคร)</label>
                                 <input type="text" id="nh-who" placeholder="พิมพ์คำตอบที่นี่..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-shadow">
@@ -274,11 +282,6 @@
                                 <label class="block text-sm font-bold text-slate-700 mb-1">How? (ผลเป็นอย่างไร)</label>
                                 <input type="text" id="nh-how" placeholder="พิมพ์คำตอบที่นี่..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-shadow">
                             </div>
-                        </div>
-                        <div class="mt-6 text-right">
-                            <button onclick="checkExercise()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg shadow transition-colors">
-                                ตรวจสอบเบื้องต้น (Check)
-                            </button>
                         </div>
                         
                         <!-- Feedback Message -->
@@ -315,7 +318,7 @@
                     <!-- Questions Form -->
                     <div class="lg:w-1/2">
                         <h3 class="text-xl font-bold text-slate-800 mb-4 border-b-2 border-slate-200 pb-2">Questions</h3>
-                        <div class="space-y-4">
+                        <div id="indiv-questions-container" class="space-y-4">
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-1">1. What happened in this news?</label>
                                 <input type="text" id="indiv-q1" placeholder="Type your answer here..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-shadow">
@@ -337,11 +340,6 @@
                                 <input type="text" id="indiv-q5" placeholder="Type your answer here..." class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-shadow">
                             </div>
                         </div>
-                        <div class="mt-6 text-right">
-                            <button onclick="checkIndividualExercise()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-8 rounded-lg shadow transition-colors">
-                                ส่งคำตอบ (Submit) <i class="fa-solid fa-paper-plane ml-2"></i>
-                            </button>
-                        </div>
                         
                         <!-- Feedback Message -->
                         <div id="indiv-feedback" class="hidden mt-4 p-4 rounded-lg bg-indigo-100 text-indigo-800 font-medium text-left">
@@ -351,6 +349,13 @@
                 </div>
             </div>
             
+            <!-- Submit Both Exercises Button -->
+            <div class="mt-2 mb-10 text-center">
+                <button onclick="checkAllExercises()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded-full shadow-lg transition-transform transform hover:scale-105 text-xl">
+                    ส่งคำตอบและตรวจแบบฝึกหัดทั้งหมด <i class="fa-solid fa-paper-plane ml-2"></i>
+                </button>
+            </div>
+
         </section>
 
         <!-- ============================================== -->
@@ -545,11 +550,42 @@
         }
 
         // ==========================================
-        // Check News Hunter Activity
+        // Shuffle Exercises on Load
         // ==========================================
-        function checkExercise() {
-            // เฉลย Keywords สำหรับ News Hunter
-            const answerKeys = [
+        document.addEventListener('DOMContentLoaded', () => {
+            const containers = ['nh-questions-container', 'indiv-questions-container'];
+            containers.forEach(id => {
+                const container = document.getElementById(id);
+                if(container) {
+                    const items = Array.from(container.children);
+                    // สลับตำแหน่ง DOM elements แบบสุ่ม
+                    items.sort(() => Math.random() - 0.5);
+                    items.forEach(item => container.appendChild(item));
+                }
+            });
+        });
+
+        // ==========================================
+        // Check All Exercises (News Hunter & Individual)
+        // ==========================================
+        function checkAllExercises() {
+            const exNameInput = document.getElementById('exercise-name');
+            const exNameError = document.getElementById('ex-name-error');
+            const exName = exNameInput.value.trim();
+            
+            if(!exName) {
+                exNameError.classList.remove('hidden');
+                exNameInput.classList.add('border-red-500');
+                exNameInput.scrollIntoView({behavior: 'smooth', block: 'center'});
+                return;
+            }
+            exNameError.classList.add('hidden');
+            exNameInput.classList.remove('border-red-500');
+
+            // ------------------------------------------
+            // 1. ตรวจ News Hunter Activity
+            // ------------------------------------------
+            const answerKeysNH = [
                 { id: 'nh-who', label: 'Who', keys: ['driver', 'ambulance', 'man'] },
                 { id: 'nh-what', label: 'What', keys: ['crash', 'accident', 'tree'] },
                 { id: 'nh-where', label: 'Where', keys: ['silom', 'road'] },
@@ -558,10 +594,10 @@
                 { id: 'nh-how', label: 'How', keys: ['injure', 'arrive', 'help'] }
             ];
 
-            let score = 0;
-            let reportHTML = '<h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-clipboard-list"></i> สรุปผลการวิเคราะห์ (News Hunter):</h4><ul class="space-y-2">';
+            let scoreNH = 0;
+            let listHTMLNH = '<ul class="space-y-2">';
 
-            answerKeys.forEach(item => {
+            answerKeysNH.forEach(item => {
                 const inputEl = document.getElementById(item.id);
                 const val = inputEl.value.trim();
                 const isCorrect = validateInput(val, item.keys);
@@ -569,38 +605,43 @@
                 inputEl.classList.remove('border-slate-300', 'border-red-500', 'border-emerald-500', 'ring-red-500', 'ring-emerald-500');
 
                 if (isCorrect) {
-                    score++;
-                    reportHTML += `<li><i class="fa-solid fa-check text-emerald-600 mr-2 w-5"></i> <strong>${item.label}:</strong> <span class="text-emerald-700">ถูกต้อง</span> (${val || '-'})</li>`;
+                    scoreNH++;
+                    listHTMLNH += `<li><i class="fa-solid fa-check text-emerald-600 mr-2 w-5"></i> <strong>${item.label}:</strong> <span class="text-emerald-700">ถูกต้อง</span> (${val || '-'})</li>`;
                     inputEl.classList.add('border-emerald-500', 'focus:ring-emerald-500');
                 } else {
-                    const hint = item.keys[0]; // แนะนำคำตอบคร่าวๆ
-                    reportHTML += `<li><i class="fa-solid fa-xmark text-red-600 mr-2 w-5"></i> <strong>${item.label}:</strong> <span class="text-red-600">ต้องปรับปรุง</span> (ยังไม่พบคำที่เกี่ยวข้องกัน เช่น <em>${hint}</em>)</li>`;
+                    listHTMLNH += `<li><i class="fa-solid fa-xmark text-red-600 mr-2 w-5"></i> <strong>${item.label}:</strong> <span class="text-red-600">ต้องปรับปรุง</span> (คำตอบของคุณ: ${val || 'ไม่ได้ตอบ'})</li>`;
                     inputEl.classList.add('border-red-500', 'focus:ring-red-500');
                 }
             });
+            listHTMLNH += '</ul>';
 
-            reportHTML += `</ul><div class="mt-4 pt-3 border-t border-slate-300/30 font-bold text-lg">คะแนนรวม: ${score} / ${answerKeys.length}</div>`;
+            let reportHTMLNH = `
+                <div class="text-center mb-5 border-b border-slate-300/50 pb-5">
+                    <h3 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-award text-yellow-500 mr-2"></i>สรุปผลวิเคราะห์ 5W1H</h3>
+                    <p class="text-lg font-bold text-emerald-700 mt-2"><i class="fa-solid fa-user-graduate mr-2"></i>${exName}</p>
+                    <div class="flex items-baseline justify-center mt-3">
+                        <span class="text-6xl font-black text-emerald-600">${scoreNH}</span>
+                        <span class="text-2xl font-bold text-slate-500 ml-1">/ ${answerKeysNH.length}</span>
+                    </div>
+                </div>
+            ` + listHTMLNH;
 
-            const feedbackDiv = document.getElementById('exercise-feedback');
-            feedbackDiv.innerHTML = reportHTML;
-            feedbackDiv.classList.remove('hidden');
+            const feedbackDivNH = document.getElementById('exercise-feedback');
+            feedbackDivNH.innerHTML = reportHTMLNH;
+            feedbackDivNH.classList.remove('hidden');
             
-            // เปลี่ยนสีพื้นหลังตามคะแนน
-            if (score === answerKeys.length) {
-                feedbackDiv.className = 'mt-4 p-4 rounded-lg font-medium bg-emerald-100 text-emerald-800';
-            } else if (score >= 3) {
-                feedbackDiv.className = 'mt-4 p-4 rounded-lg font-medium bg-yellow-100 text-yellow-800';
+            if (scoreNH === answerKeysNH.length) {
+                feedbackDivNH.className = 'mt-6 p-6 rounded-xl font-medium bg-emerald-50 text-emerald-900 border-2 border-emerald-200 shadow-sm fade-in';
+            } else if (scoreNH >= 3) {
+                feedbackDivNH.className = 'mt-6 p-6 rounded-xl font-medium bg-yellow-50 text-yellow-900 border-2 border-yellow-200 shadow-sm fade-in';
             } else {
-                feedbackDiv.className = 'mt-4 p-4 rounded-lg font-medium bg-rose-100 text-rose-800';
+                feedbackDivNH.className = 'mt-6 p-6 rounded-xl font-medium bg-rose-50 text-rose-900 border-2 border-rose-200 shadow-sm fade-in';
             }
-        }
 
-        // ==========================================
-        // Check Individual Exercise (ใบงานที่ 2)
-        // ==========================================
-        function checkIndividualExercise() {
-            // เฉลย Keywords สำหรับใบงานเดี่ยว
-            const answerKeys = [
+            // ------------------------------------------
+            // 2. ตรวจ ใบงานที่ 2 (Individual)
+            // ------------------------------------------
+            const answerKeysIndiv = [
                 { id: 'indiv-q1', label: 'Q1', keys: ['fire', 'rescue', 'burn'] },
                 { id: 'indiv-q2', label: 'Q2', keys: ['bangkok', 'house', 'kitchen'] },
                 { id: 'indiv-q3', label: 'Q3', keys: ['boy', '10-year-old', 'ten'] },
@@ -608,10 +649,10 @@
                 { id: 'indiv-q5', label: 'Q5', keys: ['no', 'luckily', 'no one'] }
             ];
 
-            let score = 0;
-            let reportHTML = '<h4 class="font-bold text-lg mb-2"><i class="fa-solid fa-file-signature"></i> ผลการตรวจใบงานที่ 2:</h4><ul class="space-y-2">';
+            let scoreIndiv = 0;
+            let listHTMLIndiv = '<ul class="space-y-3">';
 
-            answerKeys.forEach(item => {
+            answerKeysIndiv.forEach(item => {
                 const inputEl = document.getElementById(item.id);
                 const val = inputEl.value.trim();
                 const isCorrect = validateInput(val, item.keys);
@@ -619,57 +660,80 @@
                 inputEl.classList.remove('border-slate-300', 'border-red-500', 'border-indigo-500');
 
                 if (isCorrect) {
-                    score++;
-                    reportHTML += `<li><i class="fa-solid fa-circle-check text-indigo-600 mr-2"></i> <strong>${item.label}:</strong> <span class="text-indigo-700">Good Job!</span> (${val})</li>`;
+                    scoreIndiv++;
+                    listHTMLIndiv += `<li><i class="fa-solid fa-circle-check text-indigo-600 mr-2 text-lg"></i> <strong>${item.label}:</strong> <span class="text-indigo-700 font-bold">Good Job!</span> <br><span class="text-slate-600 text-sm ml-7">(${val})</span></li>`;
                     inputEl.classList.add('border-indigo-500');
                 } else {
-                    reportHTML += `<li><i class="fa-solid fa-circle-xmark text-red-500 mr-2"></i> <strong>${item.label}:</strong> <span class="text-red-600">Try again!</span> (คำตอบของคุณ: ${val || 'ไม่ได้ตอบ'})</li>`;
+                    listHTMLIndiv += `<li><i class="fa-solid fa-circle-xmark text-rose-500 mr-2 text-lg"></i> <strong>${item.label}:</strong> <span class="text-rose-600 font-bold">Try again!</span> <br><span class="text-slate-600 text-sm ml-7">(คำตอบของคุณ: ${val || 'ไม่ได้ตอบ'})</span></li>`;
                     inputEl.classList.add('border-red-500');
                 }
             });
+            listHTMLIndiv += '</ul>';
 
-            reportHTML += `</ul><div class="mt-4 pt-3 border-t border-slate-300/30 font-bold text-lg text-center">Score: ${score} / ${answerKeys.length}</div>`;
+            let reportHTMLIndiv = `
+                <div class="text-center mb-5 border-b border-indigo-300/50 pb-5">
+                    <h3 class="text-2xl font-bold text-indigo-900"><i class="fa-solid fa-medal text-indigo-500 mr-2"></i>สรุปคะแนนใบงานที่ 2</h3>
+                    <p class="text-lg font-bold text-indigo-600 mt-2"><i class="fa-solid fa-user-graduate mr-2"></i>${exName}</p>
+                    <div class="flex items-baseline justify-center mt-3">
+                        <span class="text-6xl font-black text-indigo-600">${scoreIndiv}</span>
+                        <span class="text-2xl font-bold text-indigo-400 ml-1">/ ${answerKeysIndiv.length}</span>
+                    </div>
+                </div>
+            ` + listHTMLIndiv;
 
-            const feedbackDiv = document.getElementById('indiv-feedback');
-            feedbackDiv.innerHTML = reportHTML;
-            feedbackDiv.classList.remove('hidden');
+            const feedbackDivIndiv = document.getElementById('indiv-feedback');
+            feedbackDivIndiv.innerHTML = reportHTMLIndiv;
+            feedbackDivIndiv.classList.remove('hidden');
+            feedbackDivIndiv.className = 'mt-6 p-6 rounded-xl font-medium bg-indigo-50 border-2 border-indigo-200 shadow-sm text-left fade-in';
+            
+            // เลื่อนหน้าจอลงมาให้เห็นผลคะแนนรวมด้านล่างสุด
+            feedbackDivIndiv.scrollIntoView({behavior: 'smooth', block: 'end'});
         }
 
         // ==========================================
         // Quiz Logic
         // ==========================================
-        const quizData = [
+        const baseQuizData = [
             {
-                question: "1. What happened in this news?",
+                question: "What happened in this news?",
                 options: ["A car accident on the road", "A house was burning", "An earthquake in Bangkok", "A flood in the kitchen"],
                 answer: 1
             },
             {
-                question: "2. Where did the emergency happen?",
+                question: "Where did the emergency happen?",
                 options: ["In a factory", "On Silom Road", "In a house in Bangkok", "At the hospital"],
                 answer: 2
             },
             {
-                question: "3. Who was rescued?",
+                question: "Who was rescued?",
                 options: ["A firefighter", "An old man", "A 10-year-old boy", "No one"],
                 answer: 2
             },
             {
-                question: "4. Why did the fire start?",
+                question: "Why did the fire start?",
                 options: ["Because of the heavy rain", "Someone forgot to turn off the stove", "A car crashed into the house", "The boy was playing with fire"],
                 answer: 1
             },
             {
-                question: "5. Was anyone badly injured?",
+                question: "Was anyone badly injured?",
                 options: ["Yes, the boy was injured", "Yes, the firefighter was injured", "No one knows", "No, luckily no one was badly injured"],
                 answer: 3
             }
         ];
 
+        let sessionQuizData = [];
         let currentQuestionIndex = 0;
         let score = 0;
         let studentName = "";
         let selectedOption = null;
+
+        // ฟังก์ชันสำหรับสลับตำแหน่งใน Array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
 
         function startQuiz() {
             const nameInput = document.getElementById('student-name');
@@ -685,6 +749,16 @@
             errorMsg.classList.add('hidden');
             nameInput.classList.remove('border-red-500');
             
+            // เตรียมข้อมูลแบบทดสอบ (สลับข้อและตัวเลือก)
+            sessionQuizData = JSON.parse(JSON.stringify(baseQuizData));
+            shuffleArray(sessionQuizData); // สลับลำดับคำถาม
+            
+            sessionQuizData.forEach(q => {
+                const correctAnswerText = q.options[q.answer]; // เก็บข้อความของคำตอบที่ถูกไว้ก่อน
+                shuffleArray(q.options); // สลับลำดับตัวเลือก
+                q.answer = q.options.indexOf(correctAnswerText); // หา Index ใหม่ของคำตอบที่ถูกต้อง
+            });
+            
             document.getElementById('quiz-start').classList.add('hidden');
             document.getElementById('quiz-active').classList.remove('hidden');
             
@@ -692,12 +766,13 @@
         }
 
         function loadQuestion() {
-            const qData = quizData[currentQuestionIndex];
-            document.getElementById('question-text').innerText = qData.question;
+            const qData = sessionQuizData[currentQuestionIndex];
+            // เติมเลขข้ออัตโนมัติเพื่อให้เรียง 1-5 สวยงามแม้จะสลับข้อแล้ว
+            document.getElementById('question-text').innerText = `${currentQuestionIndex + 1}. ${qData.question}`;
             document.getElementById('q-current').innerText = currentQuestionIndex + 1;
             
             // Update progress bar
-            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            const progress = ((currentQuestionIndex + 1) / sessionQuizData.length) * 100;
             document.getElementById('quiz-progress').style.width = `${progress}%`;
 
             const optionsContainer = document.getElementById('options-container');
@@ -725,7 +800,7 @@
             
             // Change Next button text on last question
             const nextBtn = document.getElementById('next-btn');
-            if (currentQuestionIndex === quizData.length - 1) {
+            if (currentQuestionIndex === sessionQuizData.length - 1) {
                 nextBtn.innerHTML = 'ส่งคำตอบ (Submit) <i class="fa-solid fa-paper-plane ml-2"></i>';
                 nextBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
                 nextBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
@@ -763,11 +838,11 @@
             }
 
             // Check answer
-            if (selectedOption === quizData[currentQuestionIndex].answer) {
+            if (selectedOption === sessionQuizData[currentQuestionIndex].answer) {
                 score++;
             }
 
-            if (currentQuestionIndex < quizData.length - 1) {
+            if (currentQuestionIndex < sessionQuizData.length - 1) {
                 currentQuestionIndex++;
                 loadQuestion();
             } else {
